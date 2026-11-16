@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سامانه فرهنگیاران ستاد هوانیروز آجا</title>
+<style>
+:root{--bg:#eef1f4;--card:#fff;--ink:#17233a;--mut:#5a6577;--pri:#1b5e6b;--acc:#d9902b;--line:#d5dbe3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101722;--card:#192233;--ink:#e8edf5;--mut:#9aa6ba;--pri:#5cc0cf;--acc:#f0b050;--line:#2b3750}}
+:root[data-theme="dark"]{--bg:#101722;--card:#192233;--ink:#e8edf5;--mut:#9aa6ba;--pri:#5cc0cf;--acc:#f0b050;--line:#2b3750}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.9}
+main{max-width:760px;margin:0 auto;padding:16px 16px 90px}
+h1{font-size:1.7rem;font-weight:800;margin:.2em 0}
+h2{font-size:1.2rem;margin:1.2em 0 .4em}
+p{margin:.3em 0;color:var(--mut)}
+.hero{padding:28px 0 8px}.brand{font-weight:800;text-align:center;padding:10px 0;border-bottom:2px solid var(--acc);margin-bottom:6px}
+.hero h1{font-size:2rem;line-height:1.5}
+.hero .flow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:.85rem}
+.hero .flow span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:0 12px}
+.hero .flow span:nth-child(odd){border-color:var(--acc)}
+.btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:8px 18px;background:var(--pri);color:#fff;cursor:pointer}
+.btn.alt{background:transparent;color:var(--pri);border:1.5px solid var(--pri)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,nav button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+label{display:block;font-weight:600;margin-top:12px}
+input,select,textarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+textarea{min-height:80px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chips label{margin:0;font-weight:400;display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:0 12px;cursor:pointer;width:auto}
+.chips input{width:auto}
+.chips label:has(input:checked){background:var(--pri);color:#fff;border-color:var(--pri)}
+fieldset{border:1px solid var(--line);border-radius:10px;margin-top:12px;padding:6px 12px 12px}
+legend{font-weight:800;padding:0 6px}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav button{flex:1;font:inherit;font-size:.8rem;background:none;border:0;color:var(--mut);padding:6px 2px;cursor:pointer;border-radius:8px}
+nav button[aria-current=true]{color:var(--pri);font-weight:800;background:var(--bg)}
+.tag{display:inline-block;font-size:.78rem;background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:0 10px;margin:2px 0 2px 4px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stats .card{margin:0}
+.stats b{font-size:1.6rem;display:block;color:var(--pri)}
+.toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 18px;border-radius:10px;z-index:9}
+.scroll{overflow-x:auto}
+.note{font-size:.82rem;border-right:3px solid var(--acc);padding-right:10px;margin-top:14px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav id="nav" aria-label="بخش‌ها"></nav>
+<script>
+const DOMAINS={"هنرهای تجسمی":["نقاشی","طراحی","خوشنویسی","گرافیک","تصویرسازی","عکاسی","صنایع‌دستی"],"هنرهای نمایشی":["بازیگری","کارگردانی","نمایشنامه‌نویسی","اجرای صحنه","مجری‌گری","تئاتر"],"موسیقی":["خوانندگی","نوازندگی","آهنگسازی","تنظیم","گروه سرود"],"ادبیات":["شعر","داستان","ویراستاری","گویندگی"],"حوزه قرآنی و مذهبی":["قرائت مجلسی قرآن کریم","قرائت ترتیل قرآن کریم","مداحی","رجزخوانی"],"رسانه و فضای مجازی":["تولید محتوا","تدوین","فیلمبرداری","طراحی پوستر","موشن‌گرافیک","مدیریت شبکه‌های اجتماعی","پادکست","مستندسازی"],"حوزه فرهنگی":["ایده‌پردازی فرهنگی","برگزاری مراسم","سخنرانی","آموزش"]};
+const REL=["کارکنان پایگاه","همسر کارکنان","فرزند کارکنان","سایر اعضای خانواده","علاقه‌مند / داوطلب"];
+const LEVEL=["۱ ـ علاقه‌مند","۲ ـ فعال","۳ ـ متخصص","۴ ـ سرگروه / مربی"];
+const COOP=["همکاری مستمر","همکاری موردی","همکاری در مناسبت‌ها","تولید محتوا","همکاری آموزشی","اجرای برنامه"];
+const SEED_CALLS=[{id:1,title:"هفته دفاع مقدس",desc:"برای برنامه‌های هفته دفاع مقدس به این افراد نیاز داریم.",needs:["عکاسی","فیلمبرداری","تدوین","طراحی پوستر","مجری‌گری","گویندگی","گروه سرود"],joined:[]},{id:2,title:"نشریه فرهنگی فصلی",desc:"تهیه مطلب، تصویرسازی و صفحه‌آرایی.",needs:["داستان","شعر","ویراستاری","تصویرسازی","گرافیک"],joined:[]}];
+/* >>> این دو مقدار را با اطلاعات پروژه‌ی جدید سوپابیس جایگزین کنید (Project Settings > API) <<< */
+const SB_URL="https://kwpvullaeskxhfcrmxbw.supabase.co",SB_KEY="sb_publishable_Tx3lDwVDYjOMYVScwgkyGw_SqEvUQfh";
+let S={members:[],calls:[],ideas:[],joins:[],me:null,token:null,loading:true,err:""};
+try{const r=localStorage.getItem("farhangyar_me_v2");if(r)S.me=JSON.parse(r)}catch(e){}
+function save(){try{localStorage.setItem("farhangyar_me_v2",JSON.stringify(S.me))}catch(e){}}
+async function api(path,opt={}){const r=await fetch(SB_URL+"/rest/v1/"+path,{method:opt.method||"GET",headers:{apikey:SB_KEY,...(S.token?{Authorization:"Bearer "+S.token}:{}),"Content-Type":"application/json"},body:opt.body?JSON.stringify(opt.body):undefined});if(!r.ok)throw new Error(await r.text());const t=await r.text();return t?JSON.parse(t):null}
+async function load(){if(SB_URL.startsWith("PASTE")){S.err="پایگاه‌داده هنوز تنظیم نشده است (راهنمای نصب را ببینید).";S.loading=false;return render()}
+try{[S.calls,S.ideas,S.joins]=await Promise.all([api("calls?select=*&order=id.desc"),api("ideas?select=*&order=id.desc"),api("joins?select=*")]);S.err=""}catch(e){S.err="اتصال به پایگاه‌داده برقرار نشد. اینترنت و تنظیمات را بررسی کنید."}
+S.loading=false;render()}
+function exportCsv(){const k=["name","rel","unit","phone","contact","skills","level","exp","works","coop","avail","created_at"];const q=v=>'"'+String(Array.isArray(v)?v.join("، "):v??"").replace(/"/g,'""')+'"';const t="\ufeff"+k.join(",")+"\n"+S.members.map(m=>k.map(c=>q(m[c])).join(",")).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/csv;charset=utf-8"}));a.download="farhangyaran.csv";a.click()}
+const fa=n=>String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const TABS=[["home","خانه"],["register","ثبت‌نام"],["calls","فراخوان‌ها"],["ideas","ایده‌ها"],["admin","مدیریت"]];
+let tab="home",filter="";
+function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;d.setAttribute("role","status");document.body.append(d);setTimeout(()=>d.remove(),2500)}
+function go(t){tab=t;render();scrollTo(0,0)}
+function chips(name,list,sel=[]){return `<div class="chips">${list.map(x=>`<label><input type="checkbox" name="${name}" value="${esc(x)}" ${sel.includes(x)?"checked":""}>${esc(x)}</label>`).join("")}</div>`}
+function opts(l,v){return l.map(x=>`<option ${x===v?"selected":""}>${esc(x)}</option>`).join("")}
+const vals=(f,n)=>[...f.querySelectorAll(`[name=${n}]:checked`)].map(i=>i.value);
+const views={
+home(){return `<section class="hero"><p style="color:var(--acc);font-weight:800;margin:0">پایگاه ششم رزمی هوانیروز تبریز</p><h1>استعدادت را معرفی کن؛ در ساختن فعالیت‌های فرهنگی سهیم باش.</h1>
+<p>این سامانه فقط یک فرم نیست. بعد از ثبت‌نام، فراخوان همکاری می‌گیری و اثر و ایده‌ات دیده می‌شود.</p>
+<div class="flow"><span>استعداد</span><span>شناسایی</span><span>ارتباط</span><span>مشارکت</span><span>تولید اثر</span><span>دیده‌شدن</span><span>تشویق</span></div>
+<p style="margin-top:18px"><button class="btn" onclick="go('register')">ثبت‌نام فرهنگیار</button> <button class="btn alt" onclick="go('calls')">مشاهده فراخوان‌ها</button></p></section>
+<h2>چه کسانی می‌توانند عضو شوند؟</h2>
+<div class="card">کارکنان محترم، خانواده کارکنان و علاقه‌مندانی که حتی حرفه‌ای نیستند اما در یک زمینه فرهنگی یا هنری استعداد دارند.</div>
+<h2>حوزه‌های فعالیت</h2>${Object.entries(DOMAINS).map(([k,v])=>`<div class="card"><b>${k}</b><p>${v.join("، ")}</p></div>`).join("")}
+<h2>فرهنگیاران چه فرصت‌هایی دارند؟</h2><div class="card">فراخوان همکاری برای هر برنامه، ثبت ایده، گواهی همکاری، نمایش آثار و جشنواره سالانه فرهنگیاران.</div>`},
+register(){if(S.me)return `<h1>ثبت‌نام شما انجام شد</h1><p>${esc(S.me.name)} عزیز، سپاس از همراهی شما. از بخش فراخوان‌ها آمادگی خود را اعلام کن.</p><p><button class="btn" onclick="go('calls')">مشاهده فراخوان‌ها</button> <button class="btn alt" onclick="S.me=null;save();render()">ثبت‌نام فرد دیگر</button></p>`;const m={};return `<h1>${S.me?"ویرایش پروفایل فرهنگی":"ثبت‌نام فرهنگیار"}</h1><p>فقط اطلاعات لازم را بنویس. اطلاعات تماس تو فقط در اختیار واحد فرهنگی ستاد هوانیروز آجا است و در اختیار افراد غیرمرتبط قرار نمی‌گیرد.</p>
+<form id="reg" class="card">
+<label for="n">نام و نام خانوادگی</label><input id="n" name="name" required value="${esc(m.name)}">
+<label for="r">نسبت با پایگاه</label><select id="r" name="rel">${opts(REL,m.rel)}</select>
+<label for="u">واحد یا محل خدمت (اختیاری)</label><input id="u" name="unit" value="${esc(m.unit)}">
+<label for="p">شماره تماس</label><input id="p" name="phone" inputmode="tel" required value="${esc(m.phone)}">
+<label for="c">راه ارتباطی ترجیحی</label><select id="c" name="contact">${opts(["تماس تلفنی","پیام‌رسان","حضوری"],m.contact)}</select>
+${Object.entries(DOMAINS).map(([k,v])=>`<fieldset><legend>${k}</legend>${chips("skills",v,m.skills||[])}</fieldset>`).join("")}
+<label for="l">سطح مهارت</label><select id="l" name="level">${opts(LEVEL,m.level)}</select>
+<label for="e">سابقه فعالیت و دوره‌های گذرانده‌شده</label><textarea id="e" name="exp">${esc(m.exp)}</textarea>
+<label for="w">لینک نمونه آثار (اختیاری)</label><input id="w" name="works" value="${esc(m.works)}">
+<label>نوع همکاری مدنظر</label>${chips("coop",COOP,m.coop||[])}
+<label for="t">زمان‌های آمادگی برای همکاری</label><input id="t" name="time" placeholder="مثلاً پنجشنبه‌ها عصر" value="${esc(m.time)}">
+<label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="consent" required style="width:auto;margin-top:8px" ${m.consent?"checked":""}>با استفاده و انتشار آثار و تصاویرم در برنامه‌های فرهنگی پایگاه موافقم.</label>
+<p style="margin-top:14px"><button class="btn">ذخیره پروفایل</button></p></form>`},
+calls(){return `<h1>فراخوان‌های همکاری</h1><p>${S.me?"آمادگی خود را برای هر فراخوان اعلام کن.":"برای اعلام آمادگی ابتدا ثبت‌نام کن."}</p>`+S.calls.map(c=>{const cj=S.joins.filter(j=>j.call_id===c.id);const joined=S.me&&cj.some(j=>j.member_id===S.me.id);const match=S.me?c.needs.filter(n=>(S.me.skills||[]).includes(n)):[];
+return `<div class="card"><div class="row"><b>${esc(c.title)}</b><span class="tag">${fa(cj.length)} نفر اعلام آمادگی کرده‌اند</span></div><p>${esc(c.descr)}</p><div>${c.needs.map(n=>`<span class="tag" ${match.includes(n)?'style="border-color:var(--acc);font-weight:700"':""}>${esc(n)}</span>`).join("")}</div>
+${match.length?`<p>با مهارت‌های تو مطابقت دارد: ${match.join("، ")}</p>`:""}
+<p><button class="btn ${joined?"alt":""}" data-join="${c.id}" ${joined?"disabled":""}>${joined?"آمادگی شما ثبت شده":"اعلام آمادگی"}</button></p></div>`}).join("")},
+ideas(){return `<h1>ایده‌های فرهنگیاران</h1><p>پیشنهاد تو پس از بررسی واحد فرهنگی می‌تواند به پروژه تبدیل شود.</p>
+<form id="idea" class="card"><label for="a">عنوان ایده</label><input id="a" name="title" required>
+<label for="b">برای چه مناسبت یا مسئله‌ای؟</label><input id="b" name="occ">
+<label for="d">توضیح، امکانات لازم و همکاران مدنظر</label><textarea id="d" name="body" required></textarea>
+<p style="margin-top:12px"><button class="btn">ثبت ایده</button></p></form>
+${S.ideas.length?S.ideas.map(i=>`<div class="card"><b>${esc(i.title)}</b> <span class="tag">${esc(i.by_name)}</span><p>${esc(i.occ)}</p><p>${esc(i.body)}</p></div>`).join(""):'<p>هنوز ایده‌ای ثبت نشده. اولین ایده را تو ثبت کن.</p>'}`},
+admin(){if(!S.token)return `<h1>ورود مدیر</h1><form id="login" class="card"><label for="em">ایمیل</label><input id="em" name="email" type="email" required><label for="pw">رمز عبور</label><input id="pw" name="password" type="password" required><p style="margin-top:12px"><button class="btn">ورود</button></p></form>`;const m=S.members;const by={};m.forEach(x=>(x.skills||[]).forEach(s=>by[s]=(by[s]||0)+1));
+const list=m.filter(x=>!filter||(x.skills||[]).includes(filter));
+return `<h1>داشبورد واحد فرهنگی</h1><div class="stats"><div class="card"><b>${fa(m.length)}</b>فرهنگیار</div><div class="card"><b>${fa(S.calls.length)}</b>فراخوان</div><div class="card"><b>${fa(S.ideas.length)}</b>ایده</div><div class="card"><b>${fa(S.joins.length)}</b>اعلام آمادگی</div></div>
+<h2>بانک استعدادها</h2><select id="f" aria-label="فیلتر مهارت"><option value="">همه مهارت‌ها</option>${Object.values(DOMAINS).flat().map(s=>`<option value="${s}" ${s===filter?"selected":""}>${s}${by[s]?" ("+fa(by[s])+")":""}</option>`).join("")}</select>
+${list.length?list.map(x=>`<div class="card"><div class="row"><b>${esc(x.name)}</b><span class="tag">${esc(x.level)}</span></div><p>${esc(x.rel)}${x.unit?" — "+esc(x.unit):""} | ${esc(x.phone)} (${esc(x.contact)})</p><div>${(x.skills||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div><p>${(x.coop||[]).join("، ")}${x.avail?" | "+esc(x.avail):""}</p></div>`).join(""):'<p>فرهنگیاری با این مشخصات ثبت نشده است.</p>'}
+<h2>فراخوان جدید</h2><form id="newcall" class="card"><label for="ct">عنوان برنامه</label><input id="ct" name="title" required><label for="cd">توضیح</label><input id="cd" name="desc">
+<label>نیازمندی‌ها</label>${chips("needs",Object.values(DOMAINS).flat())}<p style="margin-top:12px"><button class="btn">انتشار فراخوان</button></p></form>
+<p style="margin-top:18px"><button class="btn" onclick="exportCsv()">خروجی اکسل (CSV)</button> <button class="btn alt" onclick="S.token=null;S.members=[];render()">خروج</button></p>`}
+};
+function render(){
+ nav.innerHTML=TABS.map(([k,l])=>`<button data-t="${k}" ${k===tab?'aria-current="true"':""}>${l}</button>`).join("");
+ app.innerHTML='<div class="brand">سامانه فرهنگیاران ستاد هوانیروز آجا</div>'+(S.err?'<div class="card">'+S.err+'</div>':'')+(S.loading?'<p>در حال بارگذاری...</p>':views[tab]());
+ const reg=document.getElementById("reg");
+ if(reg)reg.onsubmit=async e=>{e.preventDefault();const f=new FormData(reg),o=Object.fromEntries(f);o.skills=vals(reg,"skills");o.coop=vals(reg,"coop");o.consent=!!o.consent;
+  if(!o.skills.length){toast("حداقل یک مهارت انتخاب کن");return}
+  o.id=crypto.randomUUID();const row={id:o.id,name:o.name,rel:o.rel,unit:o.unit,phone:o.phone,contact:o.contact,skills:o.skills,level:o.level,exp:o.exp,works:o.works,coop:o.coop,avail:o.time,consent:o.consent};
+  try{await api("members",{method:"POST",body:row})}catch(x){toast("ثبت انجام نشد، دوباره تلاش کن");return}
+  S.me=o;save();toast("ثبت‌نام انجام شد");go("calls")};
+ const idea=document.getElementById("idea");
+ if(idea)idea.onsubmit=async e=>{e.preventDefault();const o=Object.fromEntries(new FormData(idea));try{await api("ideas",{method:"POST",body:{title:o.title,occ:o.occ,body:o.body,by_name:S.me?S.me.name:"ناشناس"}})}catch(x){toast("ثبت انجام نشد");return}await load();toast("ایده ثبت شد")};
+ const nc=document.getElementById("newcall");
+ if(nc)nc.onsubmit=async e=>{e.preventDefault();const o=Object.fromEntries(new FormData(nc));try{await api("calls",{method:"POST",body:{title:o.title,descr:o.desc,needs:vals(nc,"needs")}})}catch(x){toast("انتشار انجام نشد");return}await load();toast("فراخوان منتشر شد")};
+ const lg=document.getElementById("login");if(lg)lg.onsubmit=async e=>{e.preventDefault();const o=Object.fromEntries(new FormData(lg));try{const r=await fetch(SB_URL+"/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify(o)});const d=await r.json();if(!r.ok)throw 0;S.token=d.access_token;S.members=await api("members?select=*&order=created_at.desc");render()}catch(x){S.token=null;toast("ورود انجام نشد")}};
+ const f=document.getElementById("f");if(f)f.onchange=()=>{filter=f.value;render()};
+}
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-t]");if(t)return go(t.dataset.t);
+ const j=e.target.closest("[data-join]");if(j){if(!S.me){toast("ابتدا ثبت‌نام کن");return go("register")}
+  const cid=+j.dataset.join;try{await api("joins",{method:"POST",body:{call_id:cid,member_id:S.me.id}})}catch(x){toast("انجام نشد");return}await load();toast("آمادگی ثبت شد")}});
+render();load();
+</script>
+</body>
+</html>
